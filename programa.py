@@ -1,8 +1,7 @@
 import os
 
 def limpar_terminal():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
+    os.system('cls')
 
 class Pessoa:
     def __init__(self, nome, idade):
@@ -41,35 +40,45 @@ class Funcionario(Pessoa):
         return self.__salario * 12
 
 class Departamento:
-    def __init__(self):
+    def __init__(self, nome):
+        self.nome = nome
         self.lista_funcionarios = []
 
     def soma_salarios_anuais(self):
         total = 0
         for funcionario in self.lista_funcionarios:
             total += funcionario.calcula_salario_anual()
-        print(f"Total dos salários anuais do departamento: R$ {total:.2f}")
+        print(f"Total dos salários anuais do departamento de {self.nome} foi: R$ {total:.2f}")
 
     def adiciona_funcionario(self, funcionario):
-        self.lista_funcionarios.append(funcionario)
+        if funcionario not in self.lista_funcionarios:
+            self.lista_funcionarios.append(funcionario)
 
     def listar_funcionarios(self):
-        print("\nLista de funcionários do departamento:")
+        print(f"\nLista de funcionários do departamento de {self.nome}:")
         for funcionario in self.lista_funcionarios:
+            print('-' * 30)
             print(f"Funcionário: {funcionario.nome}, Salário anual: R$ {funcionario.calcula_salario_anual():.2f}")
 
-pessoa1 = Pessoa("Alice", 16)
-pessoa2 = Pessoa("Bob", 25)
-pessoa3 = Pessoa("Charlie", 17)
+def solicitar_dados_funcionario():
+    nome = input("Nome do funcionário: ")
+    idade = int(input("Idade do funcionário: "))
+    salario = float(input("Salário do funcionário: "))
+    return nome, idade, salario
 
-funcionario01 = Funcionario(pessoa1.nome, pessoa1.idade, 1700.00)
-funcionario02 = Funcionario(pessoa2.nome, pessoa2.idade, 3000.00)
-funcionario03 = Funcionario(pessoa3.nome, pessoa3.idade, 2200.00)
+def main():
+    nome_departamento = input('Qual será o nome do departamento? ')
+    departamento = Departamento(nome_departamento)
+    qtd_funcionario = int(input('Quantos funcionários serão adicionados? '))
 
-departamento = Departamento()
-departamento.adiciona_funcionario(funcionario01)
-departamento.adiciona_funcionario(funcionario02)
-departamento.adiciona_funcionario(funcionario03)
+    for _ in range(qtd_funcionario):
+        nome, idade, salario = solicitar_dados_funcionario()
+        funcionario = Funcionario(nome, idade, salario)
+        departamento.adiciona_funcionario(funcionario)
+        limpar_terminal()
 
-departamento.soma_salarios_anuais()
-departamento.listar_funcionarios()
+    departamento.soma_salarios_anuais()
+    departamento.listar_funcionarios()
+
+if __name__ == "__main__":
+    main()

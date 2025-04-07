@@ -1,8 +1,3 @@
-import os
-
-def limpar_terminal():
-    os.system('cls')
-
 class Pessoa:
     def __init__(self, nome, idade):
         self.nome = nome
@@ -15,7 +10,6 @@ class Pessoa:
             print(f"Idade inválida para {self.nome}.")
             try:
                 idade_nova = int(input(f"Digite uma nova idade para {self.nome} (maior ou igual a 18): "))
-                limpar_terminal()
                 if idade_nova >= 18:
                     self.idade = idade_nova
                 else:
@@ -59,26 +53,3 @@ class Departamento:
         for funcionario in self.lista_funcionarios:
             print('-' * 30)
             print(f"Funcionário: {funcionario.nome}, Salário anual: R$ {funcionario.calcula_salario_anual():.2f}")
-
-def solicitar_dados_funcionario():
-    nome = input("Nome do funcionário: ")
-    idade = int(input("Idade do funcionário: "))
-    salario = float(input("Salário do funcionário: "))
-    return nome, idade, salario
-
-def main():
-    nome_departamento = input('Qual será o nome do departamento? ')
-    departamento = Departamento(nome_departamento)
-    qtd_funcionario = int(input('Quantos funcionários serão adicionados? '))
-
-    for _ in range(qtd_funcionario):
-        nome, idade, salario = solicitar_dados_funcionario()
-        funcionario = Funcionario(nome, idade, salario)
-        departamento.adiciona_funcionario(funcionario)
-        limpar_terminal()
-
-    departamento.soma_salarios_anuais()
-    departamento.listar_funcionarios()
-
-if __name__ == "__main__":
-    main()

@@ -1,37 +1,33 @@
 class Pessoa:
     def __init__(self, nome, idade):
         self.nome = nome
-        self.idade = idade
-        if self.idade < 18:
-            self.set_idade()
+        self.set_idade(idade)
 
-    def set_idade(self):
-        while self.idade < 18:
-            print(f"Idade inválida para {self.nome}.")
-            try:
-                idade_nova = int(input(f"Digite uma nova idade para {self.nome} (maior ou igual a 18): "))
-                if idade_nova >= 18:
-                    self.idade = idade_nova
-                else:
-                    print("Idade deve ser maior ou igual a 18.")
-            except ValueError:
-                print("Entrada inválida. Digite um número inteiro.")
+    def set_idade(self,idade):
+        while idade < 18:
+            print(f'Idade invalida para {self.nome}, restrição para menores de 18 anos')
+            idade = int(input('digite uma nova idade: '))
+        self.idade = idade
+
 
 class Funcionario(Pessoa):
     def __init__(self, nome, idade, salario):
         super().__init__(nome, idade)
-        self.__salario = salario
+        self.salario = salario
 
     @property
-    def get_salario(self):
+    def salario(self):
         return self.__salario
 
-    @get_salario.setter
-    def set_salario(self, novo):
+    @salario.setter
+    def salario(self, novo):
+        while novo < 0:
+            print(f'Salário de {self.nome} definido com um valor nulo')
+            novo = float(input('digite um novo valor para salário: '))
         self.__salario = novo
 
     def calcula_salario_anual(self):
-        return self.__salario * 12
+        return self.salario * 12
 
 class Departamento:
     def __init__(self, nome):
